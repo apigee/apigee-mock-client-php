@@ -1,7 +1,7 @@
 {
     "name": "apigee/apigee-php-mock-client",
     "type": "library",
-    "description": "To be used for queueing mock API responses fro the `apigee/apigee-client-php` library.",
+    "description": "To be used for queueing mock API responses for the `apigee/apigee-client-php` library.",
     "keywords": [
         "apigee",
         "edge",
