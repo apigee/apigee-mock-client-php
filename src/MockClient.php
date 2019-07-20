@@ -23,7 +23,6 @@ use Http\Client\Common\VersionBridgeClient;
 use Http\Client\HttpAsyncClient;
 use Http\Client\HttpClient;
 use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
 
 /**
  * A response queue that returns claimed items in a FIFO order.
@@ -38,8 +37,7 @@ class MockClient implements HttpClient, HttpAsyncClient {
   use HttpAsyncClientEmulator;
   use VersionBridgeClient;
   use MockStoragePropertyTrait;
-
-  const EMPTY_MESSAGE = 'The response queue is empty.';
+  use RequestHandlerTrait;
 
   /**
    * MockClient constructor.
@@ -54,21 +52,7 @@ class MockClient implements HttpClient, HttpAsyncClient {
    * {@inheritdoc}
    */
   public function doSendRequest(RequestInterface $request) {
-    $this->storage->addRequest($request);
-
-    foreach ($this->storage->matchableResults() as $result) {
-      if ($result->matches($request)) {
-        return $result();
-      }
-    }
-
-    $result = ($result = $this->storage->claim()) ? $result : $this->storage->default();
-
-    if ($result instanceof ResponseInterface) {
-      return $result;
-    }
-
-    throw $result instanceof \Exception ? $result : new \Exception(static::EMPTY_MESSAGE);
+    return $this->handleRequest($request);
   }
 
 }
