@@ -51,10 +51,10 @@ class MockClient implements HttpClient, HttpAsyncClient {
   /**
    * MockClient constructor.
    *
-   * @param \Apigee\MockClient\MockClientStorageInterface|NULL $storage
+   * @param \Apigee\MockClient\MockStorageInterface|NULL $storage
    */
-  public function __construct(MockClientStorageInterface $storage = NULL) {
-    $this->storage = $storage ?? new SimpleMockClientStorage();
+  public function __construct(MockStorageInterface $storage = NULL) {
+    $this->storage = $storage ?? new SimpleMockStorage();
   }
 
   /**

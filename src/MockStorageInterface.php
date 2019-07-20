@@ -23,7 +23,7 @@ use Psr\Http\Message\RequestInterface;
 /**
  * A response queue that returns claimed items in a FIFO order.
  */
-interface MockClientStorageInterface {
+interface MockStorageInterface {
 
   /**
    * Get the default response.
@@ -38,10 +38,10 @@ interface MockClientStorageInterface {
    *
    * @param \Psr\Http\Message\ResponseInterface|\Exception|NULL $defaultResponse
    *
-   * @return \Apigee\MockClient\MockClientStorageInterface
+   * @return \Apigee\MockClient\MockStorageInterface
    *   Returns $this;
    */
-  public function setDefault($default = null): MockClientStorageInterface;
+  public function setDefault($default = null): MockStorageInterface;
 
   /**
    * Add to the queue.
@@ -49,10 +49,10 @@ interface MockClientStorageInterface {
    * @param \Psr\Http\Message\ResponseInterface|\Exception $result
    *   This will either be a response or an exception.
    *
-   * @return \Apigee\MockClient\MockClientStorageInterface
+   * @return \Apigee\MockClient\MockStorageInterface
    *   Returns $this;
    */
-  public function add($result): MockClientStorageInterface;
+  public function add($result): MockStorageInterface;
 
   /**
    * Claim an item from the result queue.
@@ -75,10 +75,10 @@ interface MockClientStorageInterface {
    * Clears the response queue, the request queue, matched results and the
    * default result.
    *
-   * @return \Apigee\MockClient\MockClientStorageInterface
+   * @return \Apigee\MockClient\MockStorageInterface
    *   Returns $this;
    */
-  public function reset(): MockClientStorageInterface;
+  public function reset(): MockStorageInterface;
 
   /**
    * Adds a request to the request log.
@@ -86,10 +86,10 @@ interface MockClientStorageInterface {
    * @param \Psr\Http\Message\RequestInterface $request
    *   The HTTP request.
    *
-   * @return \Apigee\MockClient\MockClientStorageInterface
+   * @return \Apigee\MockClient\MockStorageInterface
    *   Returns $this;
    */
-  public function addRequest(RequestInterface $request): MockClientStorageInterface;
+  public function addRequest(RequestInterface $request): MockStorageInterface;
 
   /**
    * Gets the last request from the request log.
@@ -121,10 +121,10 @@ interface MockClientStorageInterface {
    * @param \Apigee\MockClient\MatchableResultInterface $matchableResult
    *   A HTTP request result matcher.
    *
-   * @return \Apigee\MockClient\MockClientStorageInterface
+   * @return \Apigee\MockClient\MockStorageInterface
    *   Returns $this;
    */
-  public function addMatchableResult(MatchableResultInterface $matchableResult): MockClientStorageInterface;
+  public function addMatchableResult(MatchableResultInterface $matchableResult): MockStorageInterface;
 
   /**
    * Gets all matchable results.

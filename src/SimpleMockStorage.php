@@ -21,7 +21,7 @@ namespace Apigee\MockClient;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\RequestInterface;
 
-class SimpleMockClientStorage implements MockClientStorageInterface {
+class SimpleMockStorage implements MockStorageInterface {
 
   /**
    * The default HTTP request result.
@@ -61,7 +61,7 @@ class SimpleMockClientStorage implements MockClientStorageInterface {
   /**
    * {@inheritdoc}
    */
-  public function setDefault($default = NULL): MockClientStorageInterface {
+  public function setDefault($default = NULL): MockStorageInterface {
     $this->default = $default;
 
     return $this;
@@ -70,7 +70,7 @@ class SimpleMockClientStorage implements MockClientStorageInterface {
   /**
    * {@inheritdoc}
    */
-  public function add($result): MockClientStorageInterface {
+  public function add($result): MockStorageInterface {
     $this->queue[] = $result;
 
     return $this;
@@ -93,7 +93,7 @@ class SimpleMockClientStorage implements MockClientStorageInterface {
   /**
    * {@inheritdoc}
    */
-  public function reset(): MockClientStorageInterface {
+  public function reset(): MockStorageInterface {
     $this->default = NULL;
     $this->requests = [];
     $this->queue = [];
@@ -105,7 +105,7 @@ class SimpleMockClientStorage implements MockClientStorageInterface {
   /**
    * {@inheritdoc}
    */
-  public function addRequest(RequestInterface $request): MockClientStorageInterface {
+  public function addRequest(RequestInterface $request): MockStorageInterface {
     $this->requests[] = $request;
 
     return $this;
@@ -135,7 +135,7 @@ class SimpleMockClientStorage implements MockClientStorageInterface {
   /**
    * {@inheritdoc}
    */
-  public function addMatchableResult(MatchableResultInterface $matchableResult): MockClientStorageInterface {
+  public function addMatchableResult(MatchableResultInterface $matchableResult): MockStorageInterface {
     $this->matchers[] = $matchableResult;
 
     return $this;

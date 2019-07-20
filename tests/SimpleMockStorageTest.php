@@ -19,7 +19,7 @@
 namespace Apigee\MockClient\Tests;
 
 use Apigee\MockClient\MatchableResult;
-use Apigee\MockClient\SimpleMockClientStorage;
+use Apigee\MockClient\SimpleMockStorage;
 use Http\Discovery\MessageFactoryDiscovery;
 use Http\Message\RequestMatcher\RequestMatcher;
 use PHPUnit\Framework\TestCase;
@@ -30,10 +30,10 @@ use PHPUnit\Framework\TestCase;
  * @group client
  * @group mock
  */
-class SimpleMockClientStorageTest extends TestCase {
+class SimpleMockStorageTest extends TestCase {
 
   /**
-   * @var \Apigee\MockClient\MockClientStorageInterface
+   * @var \Apigee\MockClient\MockStorageInterface
    */
   protected $storage;
 
@@ -59,7 +59,7 @@ class SimpleMockClientStorageTest extends TestCase {
   protected $matchableResult;
 
   public function setup() {
-    $this->storage = new SimpleMockClientStorage();
+    $this->storage = new SimpleMockStorage();
     $generator = MessageFactoryDiscovery::find();
     $this->response = $generator->createResponse();
     $this->request = $generator->createRequest('GET', 'https://example.com');
