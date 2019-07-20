@@ -22,8 +22,6 @@ use Http\Client\Common\HttpAsyncClientEmulator;
 use Http\Client\Common\VersionBridgeClient;
 use Http\Client\HttpAsyncClient;
 use Http\Client\HttpClient;
-use Http\Message\RequestMatcher;
-use Http\Message\ResponseFactory;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -39,14 +37,9 @@ class MockClient implements HttpClient, HttpAsyncClient {
 
   use HttpAsyncClientEmulator;
   use VersionBridgeClient;
+  use MockStoragePropertyTrait;
 
   const EMPTY_MESSAGE = 'The response queue is empty.';
-  /**
-   * The response queue will be responsible for storing responses.
-   *
-   * @var \Apigee\MockClient\ResponseQueueInterface|\Apigee\MockClient\SimpleResponseQueue
-   */
-  protected $storage;
 
   /**
    * MockClient constructor.
@@ -77,76 +70,5 @@ class MockClient implements HttpClient, HttpAsyncClient {
 
     throw $result instanceof \Exception ? $result : new \Exception(static::EMPTY_MESSAGE);
   }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function on(RequestMatcher $requestMatcher, $result) {
-    // Validate the result.
-    if ($result instanceof \Exception || $result instanceof ResponseInterface || is_callable($result)) {
-      // Normalize to a callable result.
-      $callable = is_callable($result) ? $result : function () use ($result) {
-        if ($result instanceof \Exception) {
-          throw $result;
-        }
-
-        return $result;
-      };
-
-      $this->storage->addMatchableResult(new MatchableResult($requestMatcher, $callable));
-    } else {
-      throw new \InvalidArgumentException('Result must be either a response, an exception, or a callable');
-    }
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setDefaultResponse(ResponseInterface $defaultResponse = NULL) {
-    $this->storage->setDefault($defaultResponse);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setDefaultException(\Exception $defaultException = null) {
-    $this->storage->setDefault($defaultException);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function addResponse(ResponseInterface $response) {
-    $this->storage->add($response);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function addException(\Exception $exception) {
-    $this->storage->add($exception);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getRequests() {
-    return $this->storage->requests();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getLastRequest() {
-    return $this->storage->lastRequest();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function reset() {
-    $this->storage->reset();
-  }
-
 
 }
