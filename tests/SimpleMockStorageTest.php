@@ -26,9 +26,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Tests the simple mock client storage.
- *
- * @group client
- * @group mock
  */
 class SimpleMockStorageTest extends TestCase {
 

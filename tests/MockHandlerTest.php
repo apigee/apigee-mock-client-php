@@ -30,10 +30,6 @@ use Psr\Http\Message\ResponseInterface;
 
 /**
  * Tests the mock handler.
- *
- * @group client
- * @group mock
- * @small
  */
 class MockHandlerTest extends TestCase {
 

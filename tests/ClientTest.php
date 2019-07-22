@@ -25,10 +25,6 @@ use Psr\Http\Message\ResponseInterface;
 
 /**
  * Tests the mock client.
- *
- * @group client
- * @group mock
- * @small
  */
 class ClientTest extends TestCase {
 
