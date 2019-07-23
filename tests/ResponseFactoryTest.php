@@ -19,6 +19,8 @@
 namespace Apigee\MockClient\Tests;
 
 use Apigee\MockClient\Exception\MatchingGeneratorNotFoundException;
+use Apigee\MockClient\Generator\TwigGenerator;
+use Apigee\MockClient\Generator\TwigSource;
 use Apigee\MockClient\ResponseFactory;
 use Apigee\MockClient\ResponseGeneratorInterface;
 use PHPUnit\Framework\TestCase;
@@ -56,6 +58,34 @@ class ResponseFactoryTest extends TestCase {
     // Make sure a non matching response will throw an error.
     $this->expectException(MatchingGeneratorNotFoundException::class);
     $factory->generateResponse(new \stdClass());
+  }
+
+  /**
+   * Test the twig generator.
+   */
+  public function testTwigGenerator() {
+    // Use a unique ID for a bit of random data.
+    $uuid = uniqid();
+
+    // Create a twig generator.
+    $generator = new TwigGenerator(new \Twig_Environment(new \Twig_Loader_String()));
+
+    // Creates a response factory.
+    $factory = new ResponseFactory();
+    $factory->addGenerator($generator);
+
+    // Generate a response.
+    $response = $factory->generateResponse(new TwigSource(
+      '{"uuid": "{{ uuid }}"}',
+      ['uuid' => $uuid],
+      200,
+      ['content-type' => 'application/json;charset=utf-8']
+    ));
+    $response_data = json_decode($response->getBody());
+
+    static::assertSame(200, $response->getStatusCode());
+    static::assertSame(['application/json;charset=utf-8'], $response->getHeader('content-type'));
+    static::assertSame($uuid, $response_data->uuid);
   }
 
 }
