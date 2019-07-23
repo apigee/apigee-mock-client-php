@@ -86,7 +86,7 @@ class SimpleMockStorage implements MockStorageInterface {
   /**
    * {@inheritdoc}
    */
-  public function totalInQueue(): int {
+  public function responseCount(): int {
     return count($this->queue);
   }
 

@@ -39,11 +39,16 @@ class ClientTest extends TestCase {
   function testChronologicalResponse() {
     $client = new MockClient();
 
+    // Add a couple of responses.
     $client->addResponse($this->createMock(ResponseInterface::class));
     $client->addResponse($this->createMock(ResponseInterface::class));
+    // Make sure the total count is correct.
+    static::assertSame(2, $client->responseCount());
 
     static::assertInstanceOf(ResponseInterface::class, $client->sendRequest($this->createMock(RequestInterface::class)));
     static::assertInstanceOf(ResponseInterface::class, $client->sendRequest($this->createMock(RequestInterface::class)));
+    // The queue should now be empty.
+    static::assertSame(0, $client->responseCount());
 
     $this->expectException(\Exception::class);
     $client->sendRequest($this->createMock(RequestInterface::class));

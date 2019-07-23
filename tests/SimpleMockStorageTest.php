@@ -70,7 +70,7 @@ class SimpleMockStorageTest extends TestCase {
   public function testEmptyStorage() {
     static::assertNull($this->storage->default());
     static::assertNull($this->storage->claim());
-    static::assertSame(0, $this->storage->totalInQueue());
+    static::assertSame(0, $this->storage->responseCount());
     static::assertSame([], $this->storage->requests());
     static::assertNull($this->storage->lastRequest());
     static::assertSame(0, $this->storage->totalRequests());
@@ -95,7 +95,7 @@ class SimpleMockStorageTest extends TestCase {
 
     static::assertSame($this->response, $this->storage->claim());
     static::assertSame('Test exception.', (string) $this->storage->claim()->getMessage());
-    static::assertSame(0, $this->storage->totalInQueue());
+    static::assertSame(0, $this->storage->responseCount());
   }
 
   /**
@@ -138,7 +138,7 @@ class SimpleMockStorageTest extends TestCase {
     $this->storage->addMatchableResult($this->matchableResult);
 
     static::assertNotNull($this->storage->default());
-    static::assertSame(1, $this->storage->totalInQueue());
+    static::assertSame(1, $this->storage->responseCount());
     static::assertSame([$this->request], $this->storage->requests());
     static::assertSame($this->request, $this->storage->lastRequest());
     static::assertSame(1, $this->storage->totalRequests());

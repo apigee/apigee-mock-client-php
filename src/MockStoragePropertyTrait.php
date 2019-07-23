@@ -122,6 +122,16 @@ trait MockStoragePropertyTrait {
   }
 
   /**
+   * Gets the total number of items in the queue.
+   *
+   * @return int
+   *   The queue length.
+   */
+  public function responseCount() {
+    return $this->storage->responseCount();
+  }
+
+  /**
    * Gets all the requests that have been logged.
    *
    * @return \Psr\Http\Message\RequestInterface[]

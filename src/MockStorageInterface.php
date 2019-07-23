@@ -67,7 +67,7 @@ interface MockStorageInterface {
    *
    * @return int
    */
-  public function totalInQueue(): int;
+  public function responseCount(): int;
 
   /**
    * Reset storage.
