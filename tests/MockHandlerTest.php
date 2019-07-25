@@ -48,7 +48,7 @@ class MockHandlerTest extends TestCase {
     ]);
 
     $this->expectException(\Exception::class);
-    $result = $client->send($this->generic_request);
+    $client->send($this->generic_request);
   }
 
   function testChronologicalResponse() {

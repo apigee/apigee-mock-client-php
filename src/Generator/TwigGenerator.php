@@ -18,8 +18,8 @@
 
 namespace Apigee\MockClient\Generator;
 
+use Apigee\MockClient\Psr7\Response;
 use Apigee\MockClient\ResponseGeneratorInterface;
-use GuzzleHttp\Psr7\Response;
 
 /**
  * A response generator that can convert a template and context to a response.
