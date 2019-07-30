@@ -37,7 +37,7 @@ class MatchableResult implements MatchableResultInterface {
   }
 
   public function __invoke() {
-    $this->result();
+    return ($this->result)();
   }
 
 }
