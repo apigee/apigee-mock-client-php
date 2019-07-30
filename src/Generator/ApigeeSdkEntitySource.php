@@ -26,11 +26,11 @@ use Apigee\Edge\Entity\EntityInterface;
 class ApigeeSdkEntitySource {
 
   /**
-   * The source edge entity.
+   * The source edge entity or array of entities.
    *
    * @var \Apigee\Edge\Entity\EntityInterface
    */
-  protected $entity;
+  protected $data;
 
   /**
    * The response code.
@@ -56,8 +56,8 @@ class ApigeeSdkEntitySource {
   /**
    * Create a twig response generator source.
    *
-   * @param \Apigee\Edge\Entity\EntityInterface $entity
-   *   The Apigee Edge SDK entity.
+   * @param mixed $data
+   *   The Apigee Edge SDK entity or an array of entities.
    * @param int $response_code
    *   The response code of the generated response.
    * @param array $headers
@@ -65,10 +65,10 @@ class ApigeeSdkEntitySource {
    * @param string $format
    *   The API response payload format.
    */
-  public function __construct(EntityInterface $entity, $response_code = 200, $headers = [], $format = 'json') {
-    $this->entity = $entity;
+  public function __construct($data, $response_code = 200, $headers = [], $format = 'json') {
+    $this->data = $data;
     $this->responseCode = $response_code;
-    $this->headers = $headers;
+    $this->headers = $headers + ['content-type' => 'application/json;charset=utf-8'];
     $this->format = $format;
   }
 
@@ -78,8 +78,8 @@ class ApigeeSdkEntitySource {
    * @return \Apigee\Edge\Entity\EntityInterface
    *   The Apigee SDK entity.
    */
-  public function getEntity(): EntityInterface {
-    return $this->entity;
+  public function getData() {
+    return $this->data;
   }
 
   /**

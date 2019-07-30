@@ -56,7 +56,7 @@ class ApigeeSdkEntityGenerator implements ResponseGeneratorInterface {
    */
   public function generateFromSource($source) {
     /** @var \Apigee\MockClient\Generator\ApigeeSdkEntitySource $source */
-    $content = $this->serializer->serialize($source->getEntity(), $source->getFormat());
+    $content = $this->serializer->serialize($source->getData(), $source->getFormat());
 
     return new Response($source->getResponseCode(), $source->getHeaders(), $content) ;
   }
