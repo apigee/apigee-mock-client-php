@@ -18,6 +18,7 @@
 
 namespace Apigee\MockClient\Generator;
 
+use Apigee\Edge\Serializer\EntitySerializer;
 use Apigee\Edge\Serializer\EntitySerializerInterface;
 use Apigee\MockClient\Psr7\Response;
 use Apigee\MockClient\ResponseGeneratorInterface;
@@ -40,8 +41,8 @@ class ApigeeSdkEntityGenerator implements ResponseGeneratorInterface {
    * @param \Apigee\Edge\Serializer\EntitySerializerInterface $serializer
    *   The entity serializer.
    */
-  public function __construct(EntitySerializerInterface $serializer) {
-    $this->serializer = $serializer;
+  public function __construct(EntitySerializerInterface $serializer = NULL) {
+    $this->serializer = $serializer ?? new EntitySerializer();
   }
 
   /**
