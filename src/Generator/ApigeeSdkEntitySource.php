@@ -1,0 +1,115 @@
+<?php
+
+/*
+ * Copyright 2019 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+namespace Apigee\MockClient\Generator;
+
+use Apigee\Edge\Entity\EntityInterface;
+
+/**
+ * A source type for the generating responses from Apigee SDK entities.
+ */
+class ApigeeSdkEntitySource {
+
+  /**
+   * The source edge entity.
+   *
+   * @var \Apigee\Edge\Entity\EntityInterface
+   */
+  protected $entity;
+
+  /**
+   * The response code.
+   *
+   * @var int
+   */
+  protected $responseCode;
+
+  /**
+   * The response headers.
+   *
+   * @var array
+   */
+  protected $headers;
+
+  /**
+   * The response payload format.
+   *
+   * @var string
+   */
+  protected $format;
+
+  /**
+   * Create a twig response generator source.
+   *
+   * @param \Apigee\Edge\Entity\EntityInterface $entity
+   *   The Apigee Edge SDK entity.
+   * @param int $response_code
+   *   The response code of the generated response.
+   * @param array $headers
+   *   Headers to add to the response.
+   * @param string $format
+   *   The API response payload format.
+   */
+  public function __construct(EntityInterface $entity, $response_code = 200, $headers = [], $format = 'json') {
+    $this->entity = $entity;
+    $this->responseCode = $response_code;
+    $this->headers = $headers;
+    $this->format = $format;
+  }
+
+  /**
+   * Get the Apigee Edge SDK entity.
+   *
+   * @return \Apigee\Edge\Entity\EntityInterface
+   *   The Apigee SDK entity.
+   */
+  public function getEntity(): EntityInterface {
+    return $this->entity;
+  }
+
+  /**
+   * Get the response code.
+   *
+   * @return int
+   *   The response code.
+   */
+  public function getResponseCode(): int {
+    return $this->responseCode;
+  }
+
+  /**
+   * Get the response headers
+   *
+   * @return array
+   *   The response headers.
+   */
+  public function getHeaders(): array {
+    return $this->headers;
+  }
+
+  /**
+   * Get the response payload format.
+   *
+   * @return string
+   *   The serialization format.
+   */
+  public function getFormat() {
+    return $this->format;
+  }
+
+}
