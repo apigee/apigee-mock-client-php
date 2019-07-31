@@ -19,6 +19,9 @@
 namespace Apigee\MockClient\Tests;
 
 use Apigee\MockClient\MockClient;
+use GuzzleHttp\Psr7\Request;
+use Http\Discovery\Exception\NotFoundException;
+use Http\Message\RequestMatcher\RequestMatcher;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -28,30 +31,81 @@ use Psr\Http\Message\ResponseInterface;
  */
 class ClientTest extends TestCase {
 
-  function testDefaultException() {
-    // Create a new mock client.
-    $client = new MockClient();
+  protected $client;
 
-    $this->expectException(\Exception::class);
-    $client->sendRequest($this->createMock(RequestInterface::class));
+  public function setUp() {
+    parent::setUp();
+
+    // Create a test client.
+    $this->client = new MockClient();
   }
 
-  function testChronologicalResponse() {
-    $client = new MockClient();
+  public function testDefaultResponse() {
+    $default_response = $this->createMock(ResponseInterface::class);
+    $this->client->setDefaultResponse($default_response);
 
-    // Add a couple of responses.
-    $client->addResponse($this->createMock(ResponseInterface::class));
-    $client->addResponse($this->createMock(ResponseInterface::class));
-    // Make sure the total count is correct.
-    static::assertSame(2, $client->responseCount());
+    static::assertSame($default_response, $this->client->sendRequest($this->createMock(RequestInterface::class)));
+  }
 
-    static::assertInstanceOf(ResponseInterface::class, $client->sendRequest($this->createMock(RequestInterface::class)));
-    static::assertInstanceOf(ResponseInterface::class, $client->sendRequest($this->createMock(RequestInterface::class)));
-    // The queue should now be empty.
-    static::assertSame(0, $client->responseCount());
+  public function testDefaultException() {
+    $this->client->setDefaultException(new \Exception('Default exception.'));
 
     $this->expectException(\Exception::class);
-    $client->sendRequest($this->createMock(RequestInterface::class));
+    $this->client->sendRequest($this->createMock(RequestInterface::class));
+  }
+
+  public function testMatchableResponse() {
+    $request_matcher = new RequestMatcher('foo');
+
+    $response = $this->createMock(ResponseInterface::class);
+    $this->client->on($request_matcher, $response);
+
+    static::assertSame($response, $this->client->sendRequest(new Request('GET', 'https://example.com/foo')));
+
+    // Test trying to add an invalid matchable result.
+    $this->expectException(\InvalidArgumentException::class);
+    $this->client->on($request_matcher, 'foo');
+  }
+
+  public function testMatchableException() {
+    $request_matcher = new RequestMatcher('foo');
+
+    $response = $this->createMock(ResponseInterface::class);
+    $this->client->on($request_matcher, new NotFoundException('The requested resource was not found.'));
+
+    $this->expectException(NotFoundException::class);
+    $this->client->sendRequest(new Request('GET', 'https://example.com/foo'));
+  }
+
+  public function testChronologicalResponse() {
+    // Add a couple of responses.
+    $this->client->addResponse($this->createMock(ResponseInterface::class));
+    $this->client->addResponse($this->createMock(ResponseInterface::class));
+    // Make sure the total count is correct.
+    static::assertSame(2, $this->client->responseCount());
+
+    static::assertInstanceOf(ResponseInterface::class, $this->client->sendRequest($this->createMock(RequestInterface::class)));
+    static::assertInstanceOf(ResponseInterface::class, $this->client->sendRequest($this->createMock(RequestInterface::class)));
+    // The queue should now be empty.
+    static::assertSame(0, $this->client->responseCount());
+
+    // Test the request log.
+    static::assertInstanceOf(RequestInterface::class, $this->client->getLastRequest());
+    static::assertCount(2, $this->client->getRequests());
+    // Reset the client.
+    $this->client->reset();
+    static::assertCount(0, $this->client->getRequests());
+
+    $this->expectException(\Exception::class);
+    $this->client->sendRequest($this->createMock(RequestInterface::class));
+  }
+
+  public function testExceptionResponse() {
+    // Add an exception.
+    $this->client->addException(new NotFoundException());
+    $this->expectException(NotFoundException::class);
+
+    $this->client->sendRequest($this->createMock(RequestInterface::class));
   }
 
 }

@@ -79,7 +79,10 @@ class SdkMockClientTest extends TestCase {
     $client = new MockClient(new SimpleMockStorage());
     $client->addResponse($factory->generateResponse(new ApigeeSdkEntitySource($developer)));
 
-    $developer_controller = new DeveloperController('foo', new SdkMockClient($client));
+    $sdk_client = new SdkMockClient($client);
+    static::assertSame($client, $sdk_client->getMockHttpClient());
+
+    $developer_controller = new DeveloperController('foo', $sdk_client);
     static::assertEquals($developer, $developer_controller->load($developer->id()));
   }
 

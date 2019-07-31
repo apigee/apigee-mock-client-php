@@ -19,7 +19,6 @@
 namespace Apigee\MockClient;
 
 use Http\Message\RequestMatcher;
-use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
