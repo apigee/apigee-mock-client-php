@@ -20,7 +20,7 @@ namespace Apigee\MockClient\Generator;
 
 use Apigee\Edge\Serializer\EntitySerializer;
 use Apigee\Edge\Serializer\EntitySerializerInterface;
-use Apigee\MockClient\Psr7\Response;
+use GuzzleHttp\Psr7\Response;
 use Apigee\MockClient\ResponseGeneratorInterface;
 
 /**
