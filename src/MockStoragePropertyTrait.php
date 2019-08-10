@@ -18,6 +18,7 @@
 
 namespace Apigee\MockClient;
 
+use Apigee\MockClient\Psr7\SerializableMessageWrapper;
 use Http\Message\RequestMatcher;
 use Psr\Http\Message\ResponseInterface;
 
@@ -27,9 +28,9 @@ use Psr\Http\Message\ResponseInterface;
 trait MockStoragePropertyTrait {
 
   /**
-   * The response queue will be responsible for storing responses.
+   * The response storage.
    *
-   * @var \Apigee\MockClient\ResponseQueueInterface|\Apigee\MockClient\SimpleResponseQueue
+   * @var \Apigee\MockClient\MockStorageInterface
    */
   protected $storage;
 
@@ -47,13 +48,15 @@ trait MockStoragePropertyTrait {
   public function on(RequestMatcher $requestMatcher, $result) {
     // Validate the result.
     if ($result instanceof \Exception || $result instanceof ResponseInterface || is_callable($result)) {
+      // Some storage provides will try to serialize the result.
+      $result = $result instanceof ResponseInterface ? new SerializableMessageWrapper($result) : $result;
       // Normalize to a callable result.
       $callable = is_callable($result) ? $result : function () use ($result) {
         if ($result instanceof \Exception) {
           throw $result;
         }
-
-        return $result;
+        // The only other available type for $result is `SerializableMessageWrapper`.
+        return $result->getMessage();
       };
 
       $this->storage->addMatchableResult(new MatchableResult($requestMatcher, $callable));
