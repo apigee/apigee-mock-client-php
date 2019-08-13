@@ -1,5 +1,5 @@
 {
-    "name": "apigee/apigee-php-mock-client",
+    "name": "apigee/apigee-mock-client-php",
     "type": "library",
     "description": "To be used for queueing mock API responses for the `apigee/apigee-client-php` library.",
     "keywords": [
@@ -10,7 +10,7 @@
         "client",
         "web service"
     ],
-    "homepage": "http://github.com/apigee/apigee-php-mock-client",
+    "homepage": "http://github.com/apigee/apigee-mock-client-php",
     "license": "Apache-2.0",
     "require": {
         "guzzlehttp/psr7": "~1.0",
