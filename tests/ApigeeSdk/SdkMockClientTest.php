@@ -29,6 +29,7 @@ use Apigee\MockClient\Generator\ApigeeSdkEntitySource;
 use Apigee\MockClient\MockClient;
 use Apigee\MockClient\ResponseFactory;
 use Apigee\MockClient\SimpleMockStorage;
+use Apigee\MockClient\Tests\RandomStringGeneratorTrait;
 use Http\Message\RequestMatcher\RequestMatcher;
 use PHPUnit\Framework\TestCase;
 
@@ -37,12 +38,7 @@ use PHPUnit\Framework\TestCase;
  */
 class SdkMockClientTest extends TestCase {
 
-  /**
-   * Used to generate random strings.
-   *
-   * @var string
-   */
-  protected $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  use RandomStringGeneratorTrait;
 
   /**
    * Test Apigee Edge entity SDK generator.
@@ -56,11 +52,11 @@ class SdkMockClientTest extends TestCase {
 
     $developer = new Developer([
       'developerId' => uniqid(),
-      'companies' => [substr(str_shuffle($this->permitted_chars), 0, 8)],
-      'userName' => substr(str_shuffle($this->permitted_chars), 0, 8),
-      'firstName' => substr(str_shuffle($this->permitted_chars), 0, 8),
-      'lastName' => substr(str_shuffle($this->permitted_chars), 0, 8),
-      'email' => substr(str_shuffle($this->permitted_chars), 0, 8) . '@example.com',
+      'companies' => [$this->randomCharacters()],
+      'userName' => $this->randomCharacters(),
+      'firstName' => $this->randomCharacters(),
+      'lastName' => $this->randomCharacters(),
+      'email' => $this->randomCharacters() . '@example.com',
       'organizationName' => 'foo',
       'status' => 'active',
       'attributes' => [
@@ -97,11 +93,11 @@ class SdkMockClientTest extends TestCase {
     $developers = [
       new Developer([
         'developerId' => uniqid(),
-        'companies' => [substr(str_shuffle($this->permitted_chars), 0, 8)],
-        'userName' => substr(str_shuffle($this->permitted_chars), 0, 8),
-        'firstName' => substr(str_shuffle($this->permitted_chars), 0, 8),
-        'lastName' => substr(str_shuffle($this->permitted_chars), 0, 8),
-        'email' => substr(str_shuffle($this->permitted_chars), 0, 8) . '@example.com',
+        'companies' => [$this->randomCharacters()],
+        'userName' => $this->randomCharacters(),
+        'firstName' => $this->randomCharacters(),
+        'lastName' => $this->randomCharacters(),
+        'email' => $this->randomCharacters() . '@example.com',
         'organizationName' => 'foo',
         'status' => 'active',
         'attributes' => [
@@ -117,11 +113,11 @@ class SdkMockClientTest extends TestCase {
       ]),
       new Developer([
         'developerId' => uniqid(),
-        'companies' => [substr(str_shuffle($this->permitted_chars), 0, 8)],
-        'userName' => substr(str_shuffle($this->permitted_chars), 0, 8),
-        'firstName' => substr(str_shuffle($this->permitted_chars), 0, 8),
-        'lastName' => substr(str_shuffle($this->permitted_chars), 0, 8),
-        'email' => substr(str_shuffle($this->permitted_chars), 0, 8) . '@example.com',
+        'companies' => [$this->randomCharacters()],
+        'userName' => $this->randomCharacters(),
+        'firstName' => $this->randomCharacters(),
+        'lastName' => $this->randomCharacters(),
+        'email' => $this->randomCharacters() . '@example.com',
         'organizationName' => 'foo',
         'status' => 'active',
         'attributes' => [
