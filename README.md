@@ -5,7 +5,7 @@ A mock client library to replace calls to Apigee Edge with mock calls for testin
 
 - Add a templating system for creating JSON responses from Apigee client PHP objects.
 - Evaluate serialization as an option for mock response generation.
-- Add traits for queing responses for common objects.
+- Add traits for queuing responses for common objects.
 
 ## The Twig generator.
 
