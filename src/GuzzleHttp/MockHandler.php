@@ -26,7 +26,7 @@ use Apigee\MockClient\SimpleMockStorage;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * A response handler that servers as a Guzzle client handler.
+ * A response handler that serves as a Guzzle client handler.
  */
 class MockHandler {
 
