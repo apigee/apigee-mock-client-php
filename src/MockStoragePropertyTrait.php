@@ -21,6 +21,7 @@ namespace Apigee\MockClient;
 use Apigee\MockClient\Psr7\SerializableMessageWrapper;
 use Http\Message\RequestMatcher;
 use Psr\Http\Message\ResponseInterface;
+use SuperClosure\SerializableClosure;
 
 /**
  * A trait for dealing with the mock storage property.
@@ -50,14 +51,15 @@ trait MockStoragePropertyTrait {
     if ($result instanceof \Exception || $result instanceof ResponseInterface || is_callable($result)) {
       // Some storage provides will try to serialize the result.
       $result = $result instanceof ResponseInterface ? new SerializableMessageWrapper($result) : $result;
+
       // Normalize to a callable result.
-      $callable = is_callable($result) ? $result : function () use ($result) {
+      $callable = is_callable($result) ? $result : new SerializableClosure(function () use ($result) {
         if ($result instanceof \Exception) {
           throw $result;
         }
         // The only other available type for $result is `SerializableMessageWrapper`.
         return $result->getMessage();
-      };
+      });
 
       $this->storage->addMatchableResult(new MatchableResult($requestMatcher, $callable));
     } else {

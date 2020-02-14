@@ -14,6 +14,7 @@
     "license": "Apache-2.0",
     "require": {
         "guzzlehttp/psr7": "~1.0",
+        "jeremeamia/superclosure": "^2.4",
         "php-http/client-common": "^1.9",
         "php-http/httplug": "^1.1",
         "psr/http-message": "^1.0"
