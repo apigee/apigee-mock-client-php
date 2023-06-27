@@ -19,7 +19,7 @@
 namespace Apigee\MockClient\Psr7;
 
 use Psr\Http\Message\MessageInterface;
-use function GuzzleHttp\Psr7\stream_for;
+use GuzzleHttp\Psr7\Utils;
 
 /**
  * The serializable HTTP message wrapper.
@@ -81,7 +81,7 @@ class SerializableMessageWrapper {
    */
   public function __wakeup() {
     // Restore the response with the original body.
-    $this->message = $this->message->withBody(stream_for($this->body));
+    $this->message = $this->message->withBody(Utils::streamFor($this->body));
 
     unset($this->body);
   }
