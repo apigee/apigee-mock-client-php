@@ -38,7 +38,7 @@ class MockHandler {
    *
    * @param \Apigee\MockClient\MockStorageInterface|NULL $storage
    */
-  public function __construct(MockStorageInterface $storage = NULL) {
+  public function __construct(?MockStorageInterface $storage = NULL) {
     $this->storage = $storage ?? new SimpleMockStorage();
   }
 

@@ -43,7 +43,7 @@ class SdkMockClient extends Client {
    *
    * {@inheritdoc}
    */
-  public function __construct(MockClient $mock_client, $authentication = NULL, string $endpoint = null, array $options = []) {
+  public function __construct(MockClient $mock_client, $authentication = NULL, ?string $endpoint = null, array $options = []) {
     $this->httpClient = $mock_client;
     $options += [
       Client::CONFIG_HTTP_CLIENT_BUILDER => new Builder($this->httpClient),

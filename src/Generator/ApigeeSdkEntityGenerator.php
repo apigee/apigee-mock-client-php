@@ -38,10 +38,10 @@ class ApigeeSdkEntityGenerator implements ResponseGeneratorInterface {
   /**
    * ApigeeSdkEntityGenerator constructor.
    *
-   * @param \Apigee\Edge\Serializer\EntitySerializerInterface $serializer
+   * @param \Apigee\Edge\Serializer\EntitySerializerInterface|null $serializer
    *   The entity serializer.
    */
-  public function __construct(EntitySerializerInterface $serializer = NULL) {
+  public function __construct(?EntitySerializerInterface $serializer = NULL) {
     $this->serializer = $serializer ?? new EntitySerializer();
   }
 

@@ -70,7 +70,9 @@ class ResponseFactoryTest extends TestCase {
     $uuid = uniqid();
 
     // Create a twig generator.
-    $generator = new TwigGenerator(new \Twig_Environment(new \Twig_Loader_String()));
+    $generator = new TwigGenerator(new \Twig\Environment(new \Twig\Loader\ArrayLoader([
+      'test_template' => '{"uuid": "{{ uuid }}"}',
+    ])));
 
     // Creates a response factory.
     $factory = new ResponseFactory();
@@ -78,7 +80,7 @@ class ResponseFactoryTest extends TestCase {
 
     // Generate a response.
     $response = $factory->generateResponse(new TwigSource(
-      '{"uuid": "{{ uuid }}"}',
+      'test_template',
       ['uuid' => $uuid],
       200,
       ['content-type' => 'application/json;charset=utf-8']

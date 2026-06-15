@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!--
   ~ Copyright 2019 The Apigee Mock Client PHP Authors.
   ~
@@ -15,22 +14,15 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-
-<phpunit
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/6.4/phpunit.xsd"
-         colors="true"
-         bootstrap="./vendor/autoload.php"
-         printerClass="LimeDeck\Testing\Printer"
-         verbose="true">
-    <testsuites>
-        <testsuite name="All Apigee Edge API Client for PHP Tests">
-            <directory>tests/</directory>
-        </testsuite>
-    </testsuites>
-    <filter>
-        <whitelist>
-            <directory suffix=".php">./src</directory>
-        </whitelist>
-    </filter>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.0/phpunit.xsd" colors="true" bootstrap="./vendor/autoload.php" cacheDirectory=".phpunit.cache">
+  <testsuites>
+    <testsuite name="All Apigee Edge API Client for PHP Tests">
+      <directory>tests/</directory>
+    </testsuite>
+  </testsuites>
+  <source>
+    <include>
+      <directory suffix=".php">./src</directory>
+    </include>
+  </source>
 </phpunit>

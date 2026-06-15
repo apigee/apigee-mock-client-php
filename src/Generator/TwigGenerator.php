@@ -36,7 +36,7 @@ class TwigGenerator implements ResponseGeneratorInterface {
   /**
    * TwigGenerator constructor.
    *
-   * @param \Twig_Environment $twig
+   * @param \Twig\Environment $twig
    */
   public function __construct(\Twig\Environment $twig) {
     $this->twig = $twig;

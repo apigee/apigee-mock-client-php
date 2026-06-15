@@ -77,7 +77,7 @@ trait MockStoragePropertyTrait {
    *
    * @return $this
    */
-  public function setDefaultResponse(ResponseInterface $defaultResponse = NULL) {
+  public function setDefaultResponse(?ResponseInterface $defaultResponse = NULL) {
     $this->storage->setDefault($defaultResponse);
 
     return $this;
@@ -91,7 +91,7 @@ trait MockStoragePropertyTrait {
    *
    * @return $this
    */
-  public function setDefaultException(\Exception $defaultException = null) {
+  public function setDefaultException(?\Exception $defaultException = null) {
     $this->storage->setDefault($defaultException);
 
     return $this;
